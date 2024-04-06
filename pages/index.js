@@ -24,13 +24,15 @@ export default function Home() {
       // console.log({ result })
 
       // Use Mocked result for test.
-      console.log({ search_data })
       if (search_data.data.items.length <= 0) setResultItems([])
+      const updated_at = (new Date()).toLocaleString()
       const updates = search_data.data.items.map((item) => ({
+        'Display Link': item.displayLink,
         'Title': item.title,
         'Link': item.link,
-        'Display Link': item.displayLink,
+        'Updated at': updated_at
       }))
+      console.log({ updates })
       setResultItems(updates)
     } catch (error) {
       console.log('error occurred')
@@ -68,8 +70,8 @@ export default function Home() {
           <button onClick={() => handleSaveToSheet()}>Save Results to Google Spread Sheet</button>
         </div>
         <div>
-          {resultItems.map(item => {
-            return <div>
+          {resultItems.map((item, index) => {
+            return <div key={index}>
               <p>{item.Title}</p>
               <pre>{JSON.stringify(item, '', 2)}</pre>
             </div>

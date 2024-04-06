@@ -15,7 +15,20 @@ const doc = new GoogleSpreadsheet('1kc2mOR0nH8ZIa2aF5aVSUWDQ93Vb1mrkmI_TWbzU4e4'
 
 export default async function handler(req, res) {
   const { body: items } = req
+  if (items.length <= 0) {
+    res.status(200).json({ message: 'no items to save' })
+  }
   try {
+    await doc.loadInfo()
+    const sheet1 = doc.sheetsByIndex[1]
+
+    const headerNames = Object.keys(items[0])
+    console.log({headerNames})
+    await sheet1.setHeaderRow(headerNames)
+
+    await sheet1.addRows(items)
+    res.status(200).json({ message: 'successfully saved' })
+
     console.log({ items })
   } catch (error) {
     res.status(500).json(error);
