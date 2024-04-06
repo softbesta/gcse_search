@@ -14,8 +14,16 @@ const serviceAccountAuth = new JWT({
 const doc = new GoogleSpreadsheet('1kc2mOR0nH8ZIa2aF5aVSUWDQ93Vb1mrkmI_TWbzU4e4', serviceAccountAuth);
 
 export default async function handler(req, res) {
+  const { body: items } = req
   try {
+    console.log({ items })
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
 
+async function test_handler(req, res) {
+  try {
     console.log('*** 111')
 
     await doc.loadInfo(); // loads document properties and worksheets
