@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [searchKey, setSearchKey] = useState('')
   const [resultItems, setResultItems] = useState([])
+  const [pageNum, setPageNum] = useState(0)
 
   useEffect(() => {
     console.log({ resultItems })
@@ -16,7 +17,8 @@ export default function Home() {
     console.log('clicked GCSE')
     if (!searchKey) return
     try {
-      const response = await fetch(`/api/searchengine?id=${searchKey}`)
+      const response = await fetch(`/api/searchengine?id=${searchKey}&page=${pageNum}`)
+      setPageNum(v => v + 1)
       if (!response.ok) {
         throw new Error(response.statusText)
       }
@@ -68,6 +70,8 @@ export default function Home() {
           <br />
           <button onClick={() => handleSaveToSheet()}>Save Results to Google Spread Sheet</button>
         </div>
+        <h3>Page number: {pageNum}</h3>
+        <h3>Items: {resultItems.length}</h3>
         <div>
           {resultItems.map((item, index) => {
             return <div key={index}>
