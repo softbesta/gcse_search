@@ -1,3 +1,4 @@
+// mocked search results for google search engine.
 export const search_data = {
   data: {
     "kind": "customsearch#search",

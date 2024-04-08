@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import { useEffect, useState } from "react";
-import { search_data } from '../constants'
+// import { search_data } from '../constants'
 
 export default function Home() {
   const [searchKey, setSearchKey] = useState('')
@@ -16,12 +16,11 @@ export default function Home() {
     console.log('clicked GCSE')
     if (!searchKey) return
     try {
-      // const response = await fetch(`/api/searchengine?id=${searchKey}`)
-      // if (!response.ok) {
-      //   throw new Error(response.statusText)
-      // }
-      // const result = await response.json()
-      // console.log({ result })
+      const response = await fetch(`/api/searchengine?id=${searchKey}`)
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+      const search_data = await response.json()
 
       // Use Mocked result for test.
       if (search_data.data.items.length <= 0) setResultItems([])
